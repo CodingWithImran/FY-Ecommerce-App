@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "356172400519",
+    "project_id": "db-fycommerce",
+    "storage_bucket": "db-fycommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356172400519:android:e0d511ed77c4c2855bb522",
+        "android_client_info": {
+          "package_name": "com.codingwithimran.fycommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356172400519-tj2uqdp67n94c7p0chuqro0io5v33n6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrJzPsT-vOiWBvbcXDVWrezz-actUnlMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356172400519-tj2uqdp67n94c7p0chuqro0io5v33n6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
