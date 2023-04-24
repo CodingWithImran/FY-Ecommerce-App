@@ -14,13 +14,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/img_slider"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
                 android:layout_height="220dp"
-                app:iss_auto_cycle="true"
-                app:iss_delay="0"
-                app:iss_period="1000" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/banner1" />
 
             <LinearLayout
                 android:layout_width="match_parent"

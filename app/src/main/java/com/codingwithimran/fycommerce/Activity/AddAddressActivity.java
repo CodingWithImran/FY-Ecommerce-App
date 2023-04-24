@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddAddressActivity extends AppCompatActivity {
-    EditText name, address, city, postal_code, phone_number;
+    EditText name, address, city,phone_number;
     Button btn_add_address;
     Toolbar toolbar;
     FirebaseAuth auth;
@@ -42,7 +42,6 @@ public class AddAddressActivity extends AppCompatActivity {
         name = findViewById(R.id.ad_name);
         address = findViewById(R.id.ad_address);
         city = findViewById(R.id.ad_city);
-        postal_code = findViewById(R.id.ad_code);
         phone_number = findViewById(R.id.ad_phone);
         btn_add_address = findViewById(R.id.ad_add_address);
 
@@ -56,7 +55,6 @@ public class AddAddressActivity extends AppCompatActivity {
                 String u_name = name.getText().toString();
                 String u_address = address.getText().toString();
                 String u_city = city.getText().toString();
-                String u_code = postal_code.getText().toString();
                 String u_number = phone_number.getText().toString();
 
                 String final_address = "";
@@ -70,14 +68,11 @@ public class AddAddressActivity extends AppCompatActivity {
                 if(!u_city.isEmpty()){
                     final_address +=" city " + u_city;
                 }
-                if(!u_code.isEmpty()){
-                    final_address +=" postal code " + u_code;
-                }
                 if(!u_number.isEmpty()){
                     final_address += " number " + u_number;
                 }
 
-                if(!u_name.isEmpty() && !u_address.isEmpty() && !u_city.isEmpty() && !u_code.isEmpty() && !u_number.isEmpty()){
+                if(!u_name.isEmpty() && !u_address.isEmpty() && !u_city.isEmpty() &&  !u_number.isEmpty()){
                     Map<String, String> map = new HashMap<>();
                     map.put("fullAddress", final_address);
                     map.put("CustomerName", u_name);

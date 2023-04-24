@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    ImageSlider imgslider;
+//    ImageSlider imgslider;
 
     RecyclerView recyclerView, product_recyclerView, rec_allproducts;
     CategoryAdapter categoryAdapter;
@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        imgslider = (view).findViewById(R.id.img_slider);
+//        imgslider = (view).findViewById(R.id.img_slider);
         recyclerView = (view).findViewById(R.id.rec_category);
         product_recyclerView = (view).findViewById(R.id.new_product_rec);
         rec_allproducts = (view).findViewById(R.id.popular_rec);
@@ -109,11 +109,11 @@ public class HomeFragment extends Fragment {
         progressDialog.show();
        home_layout.setVisibility(View.INVISIBLE);
 
-        List<SlideModel> imgslide = new ArrayList<>();
-        imgslide.add(new SlideModel( R.drawable.banner1, "Discount on shoes", ScaleTypes.CENTER_CROP));
-        imgslide.add(new SlideModel( R.drawable.banner2, "Discount On Perfumes", ScaleTypes.CENTER_CROP));
-        imgslide.add(new SlideModel( R.drawable.banner3, "Discount On Perfumes", ScaleTypes.CENTER_CROP));
-        imgslider.setImageList(imgslide);
+//        List<SlideModel> imgslide = new ArrayList<>();
+//        imgslide.add(new SlideModel( R.drawable.banner1, "Discount on shoes", ScaleTypes.CENTER_CROP));
+//        imgslide.add(new SlideModel( R.drawable.banner2, "Discount On Perfumes", ScaleTypes.CENTER_CROP));
+//        imgslide.add(new SlideModel( R.drawable.banner3, "Discount On Perfumes", ScaleTypes.CENTER_CROP));
+//        imgslider.setImageList(imgslide);
 
         list = new ArrayList<>();
         categoryAdapter = new CategoryAdapter(getContext(), list);

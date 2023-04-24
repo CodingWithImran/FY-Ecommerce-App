@@ -21,19 +21,19 @@ public class OnBoardingAdapters extends PagerAdapter {
         this.context = context;
     }
      int ImgArray[] = {
-            R.drawable.banner1,
-            R.drawable.banner2,
-            R.drawable.banner3
+            R.drawable.img1,
+            R.drawable.img2,
+            R.drawable.img3
     };
      int headingArray[] = {
             R.string.first_slide,
             R.string.second_slide,
-            R.string.third_slide
+             R.string.third_slide
     };
     int descriptionArray[] = {
             R.string.description,
-            R.string.description,
-            R.string.description
+            R.string.description2,
+            R.string.description3
     };
     @Override
     public int getCount() {
