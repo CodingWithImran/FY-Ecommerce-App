@@ -24,7 +24,8 @@
             android:layout_margin="8dp"
             android:orientation="vertical"
             android:paddingTop="8dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            tools:ignore="MissingClass">
 
             <ImageView
                 android:id="@+id/productImage"
@@ -42,6 +43,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
+                android:visibility="gone" />
+
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/playerView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                app:repeat_toggle_modes="none"
+                app:show_buffering="when_playing"
+                app:show_shuffle_button="false"
+                app:use_artwork="true" />
+
+            <ProgressBar
+                android:id="@+id/loadingIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -157,7 +177,7 @@
         android:drawableLeft="@drawable/ic_baseline_shopping_cart_24"
         android:fontFamily="@font/amethysta"
         android:text="Add to Cart"
-        app:backgroundTint="@color/purple_700"
+        app:backgroundTint="@color/blue"
         app:layout_constraintBottom_toTopOf="@+id/btn_buyNow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/nestedScrollView" />

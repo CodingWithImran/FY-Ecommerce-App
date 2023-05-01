@@ -9,6 +9,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.codingwithimran.fycommerce.R;
 
@@ -200,6 +201,7 @@ public class JazzCashPaymentActivity extends AppCompatActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             if(url.equals(paymentReturnUrl)){
                 System.out.println("AhmadLogs: return url cancelling");
+                Toast.makeText(JazzCashPaymentActivity.this, "Return URL", Toast.LENGTH_SHORT).show();
                 view.stopLoading();
                 return;
             }

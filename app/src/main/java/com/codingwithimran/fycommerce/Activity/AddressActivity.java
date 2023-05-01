@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -47,7 +48,9 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
     HashMap<String, String> map;
     HashMap<String, String> productMap;
     Object obj;
+    ProgressDialog progressDialog;
     int totalamount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,10 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
         // Instance Of Firebase
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-
+        // Dialog Options show
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please Waite...");
+        progressDialog.show();
         // ArrayList and setLayout Manager
         addressList = new ArrayList<>();
         rec_address.setLayoutManager(new LinearLayoutManager(this));
@@ -93,6 +99,7 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
                         .collection("Address").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        progressDialog.dismiss();
                         if(task.isSuccessful()){
                             for(DocumentSnapshot doc : task.getResult().getDocuments()){
                                 AddressModals modals = doc.toObject(AddressModals.class);

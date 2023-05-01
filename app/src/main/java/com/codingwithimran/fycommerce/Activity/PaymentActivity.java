@@ -1,11 +1,14 @@
 package com.codingwithimran.fycommerce.Activity;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import com.codingwithimran.fycommerce.Modals.ProductModal;
 import com.codingwithimran.fycommerce.Modals.ShowAllProductModal;
 import com.codingwithimran.fycommerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -179,8 +183,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     public void paymentOnCash(){
         isFromCart = getIntent().getBooleanExtra("is_from_cart", false);
         String saveCurrentTime, saveCurrentDate;
-
-        Toast.makeText(this, ""+isFromCart, Toast.LENGTH_SHORT).show();
         if (isFromCart) {
             // data is from the cart activity
             Calendar calfordate = Calendar.getInstance();
@@ -207,16 +209,17 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                         detailsProductsRef.add(productMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                db.collection("AddToCart").document(auth.getCurrentUser().getUid())
-                                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()){
-                                                    Toast.makeText(PaymentActivity.this, "Orders successful submit", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(PaymentActivity.this, MainActivity.class));
-                                                }
-                                            }
-                                        });
+                                deleteCartItems();
+//                                db.collection("AddToCart").document(auth.getCurrentUser().getUid())
+//                                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<Void> task) {
+//                                                if(task.isSuccessful()){
+//                                                    Toast.makeText(PaymentActivity.this, "Orders successful submit", Toast.LENGTH_SHORT).show();
+//                                                    startActivity(new Intent(PaymentActivity.this, MainActivity.class));
+//                                                }
+//                                            }
+//                                        });
                             }
                         });
                     })
@@ -330,5 +333,22 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             });
         }
 
+    }
+
+    public void deleteCartItems(){
+//        database = FirebaseFirestore.getInstance();
+        database.collection("AddToCart").document(auth.getCurrentUser().getUid()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        startActivity(new Intent(PaymentActivity.this, MainActivity.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Error deleting user's cart document", e);
+                    }
+                });
     }
 }

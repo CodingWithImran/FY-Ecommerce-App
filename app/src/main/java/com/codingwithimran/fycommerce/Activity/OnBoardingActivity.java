@@ -66,6 +66,7 @@ public class OnBoardingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(OnBoardingActivity.this, MainActivity.class));
+                finish();
             }
         });
         adddots(0);
@@ -79,9 +80,9 @@ public class OnBoardingActivity extends AppCompatActivity {
             dots[i].setText(Html .fromHtml("&#8226;"));
             dots[i].setTextSize(35);
             dotsLayout.addView(dots[i]);
-//            if(dots.length > 0){
-//                dots[position].setTextColor(Color.GREEN);
-//            }
+            if(dots.length > 0){
+//                dots[position].setTextColor(Color.parseColor("#fad4d3"));
+            }
         }
 
     }

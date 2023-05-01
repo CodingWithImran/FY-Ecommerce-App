@@ -9,7 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="pink">#ff5ccb</color>
-    <color name="blue">#00f0ff</color>
+    <color name="blue">#bc818d</color>  // it's be changes
     <color name="backgroundcolor">#fffcff</color>
-    <color name="textHeading">#008eff</color>
+    <color name="textHeading">#fad4d3</color>
+    <color name="secondmaincolor">#a76d7c</color>
+    <color name="itemsCOlor">#f5e9eb</color>
 </resources>

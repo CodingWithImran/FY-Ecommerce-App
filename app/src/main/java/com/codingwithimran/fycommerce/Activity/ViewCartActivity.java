@@ -9,6 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +57,7 @@ public class ViewCartActivity extends AppCompatActivity {
     int i=1;
     int data;
     MyCartModal allpromodal;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,8 @@ public class ViewCartActivity extends AppCompatActivity {
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Waite...");
         cartList = new ArrayList<>();
         myCartAdapter = new MyCartAdapter(this, cartList);
         cart_rec.setAdapter(myCartAdapter);
@@ -86,13 +90,14 @@ public class ViewCartActivity extends AppCompatActivity {
         // enter data in order Map
 
         // show code from database
-
+        progressDialog.show();
         database.collection("AddToCart").document(auth.getCurrentUser().getUid())
                 .collection("User" +
                         "s").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            progressDialog.dismiss();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 allpromodal = document.toObject(MyCartModal.class);
                                 String documentId = document.getId();
@@ -160,4 +165,8 @@ public class ViewCartActivity extends AppCompatActivity {
         }
     };
 
+    public void refreshActivtiy() {
+        finish();
+        startActivity(getIntent());
+    }
 }

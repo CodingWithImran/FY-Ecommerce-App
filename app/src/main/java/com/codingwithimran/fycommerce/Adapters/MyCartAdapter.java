@@ -1,11 +1,15 @@
 package com.codingwithimran.fycommerce.Adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.codingwithimran.fycommerce.Activity.ViewCartActivity;
 import com.codingwithimran.fycommerce.Modals.MyCartModal;
 import com.codingwithimran.fycommerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,14 +35,16 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.myCartView
     ArrayList<MyCartModal> cartlist;
     FirebaseFirestore db;
     FirebaseAuth auth;
+    ProgressDialog progressDialog;
     int totalAmount = 0;
     public MyCartAdapter(Context context, ArrayList<MyCartModal> cartlist) {
         this.context = context;
         this.cartlist = cartlist;
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("please Waite ...");
     }
-
     @NonNull
     @Override
     public myCartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,32 +62,51 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.myCartView
         holder.total_price.setText(String.valueOf(modal.getTotalPrice()));
         holder.total_quantity.setText(String.valueOf(modal.getQuantity()));
 
-        totalAmount = totalAmount + cartlist.get(position).getTotalPrice();
-        Log.d("amount", String.valueOf(totalAmount));
-        Intent intent = new Intent("MyTotalAmount");
-        intent.putExtra("cartAmount", totalAmount);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+//        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                db.collection("AddToCart").document(auth.getCurrentUser().getUid())
+//                        .collection("Users").document(modal.getProductId())
+//                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if(task.isSuccessful()){
+//                                    cartlist.remove(modal);
+//                                    notifyDataSetChanged();
+//                                    Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//                return false;
+//            }
+//        });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.deleteCartview.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View view) {
+                progressDialog.show();
                 db.collection("AddToCart").document(auth.getCurrentUser().getUid())
                         .collection("Users").document(modal.getProductId())
                         .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
+                                    progressDialog.dismiss();
                                     cartlist.remove(modal);
                                     notifyDataSetChanged();
+                                    ((ViewCartActivity)context).refreshActivtiy();
                                     Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                return false;
             }
         });
 
-
+        totalAmount = totalAmount + cartlist.get(position).getTotalPrice();
+        Log.d("amount", String.valueOf(totalAmount));
+        Intent intent = new Intent("MyTotalAmount");
+        intent.putExtra("cartAmount", totalAmount);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     @Override
@@ -90,6 +116,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.myCartView
 
     public class myCartViewHolder extends RecyclerView.ViewHolder{
         TextView current_date, current_time, product_name, product_price, total_price, total_quantity;
+        ImageView deleteCartview;
         public myCartViewHolder(@NonNull View itemView) {
             super(itemView);
             current_date = (itemView).findViewById(R.id.current_date);
@@ -98,7 +125,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.myCartView
             product_price = (itemView).findViewById(R.id.product_price);
             total_price = (itemView).findViewById(R.id.total_price);
             total_quantity = (itemView).findViewById(R.id.total_quantity);
-
+            deleteCartview = (itemView).findViewById(R.id.deletecartitem);
 
             // set long click listener on ViewHolder
         }

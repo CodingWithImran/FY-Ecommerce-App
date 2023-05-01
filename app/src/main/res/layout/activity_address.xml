@@ -11,12 +11,13 @@
         android:id="@+id/address_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#8FF7FD"
+        android:background="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Your Address" />
+        app:title="Your Address"
+        app:titleTextColor="@color/backgroundcolor" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/address_recycler"
@@ -46,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@color/blue"
+        android:backgroundTint="@color/secondmaincolor"
         android:text="Continue to payment"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

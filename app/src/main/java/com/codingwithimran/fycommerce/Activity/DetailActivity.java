@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,12 @@ import com.codingwithimran.fycommerce.Modals.PopularProductModal;
 import com.codingwithimran.fycommerce.Modals.ProductModal;
 import com.codingwithimran.fycommerce.Modals.ShowAllProductModal;
 import com.codingwithimran.fycommerce.R;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,9 +51,13 @@ public class DetailActivity extends AppCompatActivity {
     FirebaseAuth auth;
     VideoView productVideo;
     VideoView videoView;
+    ProgressDialog progressDialog;
     int totalQuantity = 1;
     int totalPrice = 0;
 
+    // For ExoPlayer Video
+    private SimpleExoPlayer exoPlayer;
+    private PlayerView playerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +80,20 @@ public class DetailActivity extends AppCompatActivity {
         productVideo = findViewById(R.id.productVideo);
         videoView = findViewById(R.id.productVideo);
 
+        // For Video FindViewById
+        playerView = findViewById(R.id.playerView);
+
         // Instance for Firebase
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please Waite...");
+        // Create a new instance of the ExoPlayer
+        exoPlayer = new SimpleExoPlayer.Builder(this).build();
+
+        // Attach the ExoPlayer to the PlayerView
+        playerView.setPlayer(exoPlayer);
 
        // Get Data From New, Popular and all product by put Extra
         final Object obj = getIntent().getSerializableExtra("newProductDetails");
@@ -104,24 +126,23 @@ public class DetailActivity extends AppCompatActivity {
             if(imagePath != null){
                 Glide.with(this).load(imagePath).into(productimg);
                 productimg.setVisibility(View.VISIBLE);
-                videoView.setVisibility(View.GONE);
+                playerView.setVisibility(View.GONE);
 //                Toast.makeText(this, "image path is not null", Toast.LENGTH_SHORT).show();
             }
             else if(videoPath != null){
                 try {
-                    videoView.setVideoURI(Uri.parse(videoPath));
-                    videoView.setVisibility(View.VISIBLE);
+                    prepareVideo(videoPath);
+                    playerView.setVisibility(View.VISIBLE);
                     productimg.setVisibility(View.GONE);
-                    videoView.start();
+//                    videoView.start();
 
                 }catch (Exception e){
                     Toast.makeText(this, "Video not displayed due to some problems", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(this, "video path is not null", Toast.LENGTH_SHORT).show();
             }
         }
+
         if (popularProductModal !=null) {
-            Glide.with(this).load(popularProductModal.getProduct_img()).into(productimg);
             description.setText(popularProductModal.getDescription());
             name.setText(popularProductModal.getName());
             price.setText(String.valueOf(popularProductModal.getPrice()));
@@ -135,20 +156,19 @@ public class DetailActivity extends AppCompatActivity {
             if(imagePath != null){
                 Glide.with(this).load(imagePath).into(productimg);
                 productimg.setVisibility(View.VISIBLE);
-                videoView.setVisibility(View.GONE);
+                playerView.setVisibility(View.GONE);
 //                Toast.makeText(this, "image path is not null", Toast.LENGTH_SHORT).show();
             }
             else if(videoPath != null){
                 try {
-                    videoView.setVideoURI(Uri.parse(videoPath));
-                    videoView.setVisibility(View.VISIBLE);
+                    prepareVideo(videoPath);
+//                    videoView.setVideoURI(Uri.parse(videoPath));
+                    playerView.setVisibility(View.VISIBLE);
                     productimg.setVisibility(View.GONE);
-                    videoView.start();
-
+//                    videoView.start();
                 }catch (Exception e){
                     Toast.makeText(this, "Video not displayed due to some problems", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(this, "video path is not null", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -164,15 +184,16 @@ public class DetailActivity extends AppCompatActivity {
             if(imagePath != null){
                 Glide.with(this).load(imagePath).into(productimg);
                 productimg.setVisibility(View.VISIBLE);
-                videoView.setVisibility(View.GONE);
+                playerView.setVisibility(View.GONE);
 //                Toast.makeText(this, "image path is not null", Toast.LENGTH_SHORT).show();
             }
             else if(videoPath != null){
                 try {
-                    videoView.setVideoURI(Uri.parse(videoPath));
-                    videoView.setVisibility(View.VISIBLE);
+                    prepareVideo(videoPath);
+//                    videoView.setVideoURI(Uri.parse(videoPath));
+                    playerView.setVisibility(View.VISIBLE);
                     productimg.setVisibility(View.GONE);
-                    videoView.start();
+//                    videoView.start();
 
                 }catch (Exception e){
                     Toast.makeText(this, "Video not displayed due to some problems", Toast.LENGTH_SHORT).show();
@@ -219,6 +240,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(auth.getCurrentUser() != null){
+                    progressDialog.show();
                     addToCartfunct();
                 }else{
                     Toast.makeText(DetailActivity.this, "First please creat a account", Toast.LENGTH_SHORT).show();
@@ -239,9 +261,9 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-   
-   
-   
+
+
+
     }
     private void buyNowFunction() {
        // Declared Hashmap for the store of data
@@ -324,6 +346,8 @@ public class DetailActivity extends AppCompatActivity {
                 .add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
+                        progressDialog.dismiss();
+                        startActivity(new Intent(DetailActivity.this, MainActivity.class));
                         Toast.makeText(DetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -343,4 +367,15 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void prepareVideo(String videoUrl) {
+        // Create a MediaSource object using the video's URL
+        Uri videoUri = Uri.parse(videoUrl);
+
+        MediaSource mediaSource = new ProgressiveMediaSource.Factory(
+                new DefaultDataSourceFactory(DetailActivity.this, "user-agent"))
+                .createMediaSource(MediaItem.fromUri(videoUri));
+        // Prepare the ExoPlayer to play the video
+        exoPlayer.prepare(mediaSource);
+    }
 }
+

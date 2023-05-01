@@ -3,6 +3,7 @@ package com.codingwithimran.fycommerce.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.codingwithimran.fycommerce.Adapters.AddressAdapters;
 import com.codingwithimran.fycommerce.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -86,6 +88,8 @@ public class AddAddressActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                         if(task.isSuccessful()){
                                             Toast.makeText(AddAddressActivity.this, "Address has been added successfully", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(AddAddressActivity.this, DetailActivity.class);
+                                            startActivity(intent);
                                         }
                                 }
                             });

@@ -8,11 +8,11 @@
     android:layout_margin="5dp">
 
     <LinearLayout
-        android:padding="7dp"
-        android:background="#FB9FDE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/itemsCOlor"
+        android:orientation="vertical"
+        android:padding="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -175,6 +175,14 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/deletecartitem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:tint="@color/blue"
+            app:srcCompat="@drawable/baseline_delete_24" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

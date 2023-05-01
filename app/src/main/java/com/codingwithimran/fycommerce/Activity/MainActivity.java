@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
          setSupportActionBar(toolbar);
 //         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
+        getSupportActionBar().setTitle("Alleezy Collections");
+
 
         auth = FirebaseAuth.getInstance();
 

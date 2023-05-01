@@ -22,6 +22,9 @@ import java.util.ArrayList;
 
 public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.productViewHolder>{
 
+
+
+
     Context context;
     ArrayList<ProductModal> list ;
 
@@ -70,3 +73,8 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.pr
         }
     }
 }
+
+
+// For Dynamic Heights
+
+

@@ -18,13 +18,14 @@
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="220dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/banner1" />
+                android:scaleType="fitXY"
+                android:src="@drawable/sliderimg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="9dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -56,9 +57,6 @@
                 android:id="@+id/rec_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="9dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="9dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp" />
 
@@ -78,7 +76,8 @@
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/new_product_name"
@@ -95,7 +94,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/new_product_name"
                             android:layout_marginLeft="9dp"
-                            android:layout_marginTop="9dp"
                             android:layout_marginBottom="9dp"
                             android:text="We provide best products." />
 
@@ -118,9 +116,6 @@
                         android:id="@+id/new_product_rec"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="7dp"
-                        android:layout_marginTop="9dp"
-                        android:layout_marginBottom="9dp"
                         android:padding="5dp" />
                 </LinearLayout>
 
@@ -133,7 +128,8 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
 
                     <TextView
                         android:id="@+id/popular_products"

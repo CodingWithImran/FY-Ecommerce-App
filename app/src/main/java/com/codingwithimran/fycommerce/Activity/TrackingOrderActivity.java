@@ -32,7 +32,9 @@ public class TrackingOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_order);
+
         rec_trackingorder = findViewById(R.id.rec_trackingorder);
+
 
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
