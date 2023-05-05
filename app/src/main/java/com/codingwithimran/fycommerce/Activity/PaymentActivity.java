@@ -95,10 +95,12 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         paybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(PaymentActivity.this, JazzCashPaymentActivity.class);
+                Intent i = new Intent(PaymentActivity.this, EasypaisaPaymentMethod.class);
                 //startActivity(new Intent(MainActivity.this, PaymentActivity.class));
                 i.putExtra("price", totalAmount.getText().toString());
-
+                    i.putExtra("easymap", map);
+                    i.putExtra("easyproductmap", productMap);
+                    i.putExtra("easyisfromcart", isFromCart);
                 startActivityForResult(i, 0);
                 //startActivity(i);
             }
