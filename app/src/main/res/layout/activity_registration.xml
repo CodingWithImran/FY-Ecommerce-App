@@ -80,16 +80,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inpemail" />
 
+    <CheckBox
+        android:id="@+id/checkBoxTerms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Accept our all terms and policy"
+        app:layout_constraintStart_toStartOf="@+id/inpPassword"
+        app:layout_constraintTop_toBottomOf="@+id/inpPassword" />
+
     <Button
         android:id="@+id/signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Sign Up"
         app:backgroundTint="@color/purple_500"
         app:layout_constraintEnd_toEndOf="@+id/inpPassword"
         app:layout_constraintStart_toStartOf="@+id/inpPassword"
-        app:layout_constraintTop_toBottomOf="@+id/inpPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxTerms" />
 
     <TextView
         android:id="@+id/textView2"

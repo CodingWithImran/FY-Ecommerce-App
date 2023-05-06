@@ -31,7 +31,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Submit Payment on Easypaisa No : 03452654652"
+                android:text="Submit Payment on Jazzcash  No : 03027194298 (Haseeb Mushtaq)"
                 android:textStyle="bold" />
 
             <EditText
