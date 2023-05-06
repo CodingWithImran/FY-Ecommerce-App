@@ -16,7 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class
+RegistrationActivity extends AppCompatActivity {
     ActivityRegistrationBinding binding;
     FirebaseAuth auth;
     TextView name, email, password;
