@@ -98,9 +98,13 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
                 Intent i = new Intent(PaymentActivity.this, EasypaisaPaymentMethod.class);
                 //startActivity(new Intent(MainActivity.this, PaymentActivity.class));
                 i.putExtra("price", totalAmount.getText().toString());
-                    i.putExtra("easymap", map);
-                    i.putExtra("easyproductmap", productMap);
-                    i.putExtra("easyisfromcart", isFromCart);
+                i.putExtra("easyisfromcart", isFromCart);
+                if(isFromCart){
+                    i.putExtra("orderMap", map);
+                    i.putExtra("productMap", productMap);
+                }else{
+                    i.putExtra("buyMapItems", map);
+                }
                 startActivityForResult(i, 0);
                 //startActivity(i);
             }
