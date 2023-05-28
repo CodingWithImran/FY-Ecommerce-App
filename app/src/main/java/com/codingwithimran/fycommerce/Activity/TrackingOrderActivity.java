@@ -61,18 +61,7 @@ public class TrackingOrderActivity extends AppCompatActivity {
                 }
             }
         });
-        database.collection("Cart orders").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()){
-                    TrackingOrderModal modal = snapshot.toObject(TrackingOrderModal.class);
-                    if (modal.getCustomerId().equals(uid)) {
-                        // Run further process
-                        list.add(modal);
-                        trackingOrderAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
+
+        
     }
 }
